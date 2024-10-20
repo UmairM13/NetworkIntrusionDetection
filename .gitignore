@@ -1,0 +1,110 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# C extensions
+*.c
+*.cpp
+
+# Virtual environment folders
+env/
+venv/
+ENV/
+VENV/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Data files (ignore large datasets or intermediate files)
+data/*.csv
+data/*.txt
+
+# Ignore cleaned and processed data
+data/cleaned_data.csv
+
+# Logs
+*.log
+
+# Python cache
+*.pyo
+*.pyd
+*.pydistutils.cfg
+
+# Package directories
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Ignore joblib cache (if used)
+joblib_cache/
+
+# Ignore model files
+models/
+*.h5
+*.joblib
+
+# IDE-specific files (e.g., VSCode, PyCharm)
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore the gitignore itself!
+!.gitignore
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# C extensions
+*.c
+*.cpp
+
+# Virtual environment folders
+env/
+venv/
+ENV/
+VENV/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Data files (ignore large datasets or intermediate files)
+data/*.csv
+data/*.txt
+
+# Ignore cleaned and processed data
+data/cleaned_data.csv
+
+# Logs
+*.log
+
+# Python cache
+*.pyo
+*.pyd
+*.pydistutils.cfg
+
+# Package directories
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Ignore joblib cache (if used)
+joblib_cache/
+
+# Ignore model files
+models/
+*.h5
+*.joblib
+
+# IDE-specific files (e.g., VSCode, PyCharm)
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore the gitignore itself!
+!.gitignore
