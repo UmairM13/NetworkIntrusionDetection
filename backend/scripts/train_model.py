@@ -1,70 +1,67 @@
 import os
 import joblib
+import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import SGDClassifier
+from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix
-from sklearn.model_selection import RandomizedSearchCV
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
+from pathlib import Path
 
-def train_and_evaluate_model(X_train, y_train, X_test, y_test, pipeline):
-    # Get the directory where this script is located
-    script_dir = os.path.dirname(os.path.abspath(__file__))
+def load_data(file_path):
+    # Load dataset
+    return pd.read_csv(file_path)
 
-    # Move one directory up from the script location (to the backend folder)
-    backend_dir = os.path.abspath(os.path.join(script_dir, '..'))
+def train_and_save_model(train_file_path, target_column):
+    # Load data
+    data = load_data(train_file_path)
 
-    # Define the models directory within the backend directory
-    models_dir = os.path.join(backend_dir, 'models')
-    
-    # Create models directory if it doesn't exist
-    if not os.path.exists(models_dir):
-        os.makedirs(models_dir)
+    # Drop unwanted columns
+    unwanted_columns = ['id', 'label']  # Add any other columns you want to drop
+    data = data.drop(columns=[col for col in unwanted_columns if col in data.columns])
 
-    # Define the models and their hyperparameters
-    models = {
-        'Random Forest': (RandomForestClassifier(), {
-            'classifier__n_estimators': [10, 50],  # Reduced number of estimators
-            'classifier__max_depth': [None, 10],   # Simplified hyperparameters
-            'classifier__min_samples_split': [2, 5],
-        }),
-        'KNN': (KNeighborsClassifier(), {
-            'classifier__n_neighbors': [3],    # Reduced range and single value
-            'classifier__weights': ['uniform'],  # Simplified weights
-        }),
-        'SVM': (SGDClassifier(loss='hinge'), {  # Using SGDClassifier
-            'classifier__alpha': [0.0001, 0.001],
-            'classifier__max_iter': [1000],   # Reduced iterations
-        })
-    }
+    # Split features (X) and target (y)
+    X = data.drop(columns=[target_column])
+    y = data[target_column]
 
-    for model_name, (model, params) in models.items():
-        # Set the classifier in the pipeline
-        pipeline.set_params(classifier=model)
+    # Identify categorical columns
+    categorical_cols = X.select_dtypes(include=['object']).columns.tolist()
+    numeric_cols = X.select_dtypes(exclude=['object']).columns.tolist()
 
-        # Reduce cross-validation folds for KNN
-        cv_folds = 2 if model_name == 'KNN' else 3
+    # Preprocessor with Imputer for numeric features and OneHotEncoder for categorical features
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ('num', SimpleImputer(strategy='mean'), numeric_cols),  # Imputer for numeric features
+            ('cat', OneHotEncoder(handle_unknown='ignore'), categorical_cols)  # OneHotEncoder for categorical features
+        ]
+    )
 
-        # Use RandomizedSearchCV with fewer iterations and lower folds
-        grid_search = RandomizedSearchCV(pipeline, params, n_iter=5, cv=cv_folds, scoring='accuracy', n_jobs=-1, verbose=1)
-        
-        try:
-            grid_search.fit(X_train, y_train)
-        except Exception as e:
-            print(f"An error occurred while fitting the model '{model_name}': {e}")
-            continue  # Skip to the next model if there's an error
+    # Create a pipeline with preprocessor and classifier
+    pipeline = Pipeline(steps=[
+        ('preprocessor', preprocessor),
+        ('classifier', RandomForestClassifier(n_estimators=100, random_state=42))
+    ])
 
-        print(f"Best parameters for {model_name}: {grid_search.best_params_}")
-        print(f"Best cross-validation score for {model_name}: {grid_search.best_score_:.2f}")
+    # Split into training and testing sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-        # Make predictions and evaluate
-        if y_test is not None:
-            y_pred = grid_search.predict(X_test)
-            print(f"Confusion Matrix for {model_name}:\n{confusion_matrix(y_test, y_pred)}")
-            print(f"Classification Report for {model_name}:\n{classification_report(y_test, y_pred)}\n")
+    # Train the model
+    pipeline.fit(X_train, y_train)
 
-        # Save the best model
-        model_file_path = os.path.join(models_dir, f'{model_name.lower().replace(" ", "_")}_model.joblib')
-        joblib.dump(grid_search.best_estimator_, model_file_path)
-        print(f"Best model '{model_name}' saved as '{model_file_path}'")
+    # Evaluate the model
+    y_pred = pipeline.predict(X_test)
+    print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
+    print("Classification Report:\n", classification_report(y_test, y_pred))
+
+    # Save the model
+    models_dir = Path(__file__).parent.parent / 'models'
+    os.makedirs(models_dir, exist_ok=True)
+    joblib.dump(pipeline, os.path.join(models_dir, 'random_forest_model.joblib'))
+    print(f"Model saved to {models_dir / 'random_forest_model.joblib'}")
+
+if __name__ == "__main__":
+    train_file_path = 'data/UNSW_NB15_training-set.csv'  # Update to your actual path
+    target_column = 'attack_cat'
+    train_and_save_model(train_file_path, target_column)
