@@ -1,0 +1,45 @@
+.create-user-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Center the container vertically */
+  background-color: #f9f9f9; /* Light background color */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.create-user-form {
+  display: flex;
+  flex-direction: column;
+  width: 300px; /* Set a fixed width for the form */
+}
+
+.create-user-form input {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.create-user-form button {
+  padding: 10px;
+  background-color: #007bff; /* Blue background */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.create-user-form button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.error-message {
+  color: red; /* Red color for error messages */
+  margin-top: 10px;
+}

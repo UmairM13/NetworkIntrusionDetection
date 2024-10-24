@@ -1,0 +1,30 @@
+.home-container {
+  text-align: center;
+  padding: 20px;
+  background-color: #1f1f1f;
+  color: white;
+}
+
+.headers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  justify-items: center;
+  margin: 20px 0;
+}
+
+.header-item {
+  background-color: black;
+  padding: 15px;
+  width: 150px;
+  text-align: center;
+  border: 1px solid #ccc;
+  font-family: monospace;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: white !important;
+  margin-bottom: 20px;
+}
