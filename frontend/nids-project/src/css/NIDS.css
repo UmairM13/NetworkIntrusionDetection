@@ -1,0 +1,94 @@
+/* src/css/NIDS.css */
+
+.nids-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content */
+  padding: 40px; /* More padding for spacious feel */
+  margin-top: 70px; /* Space for the fixed navbar */
+  width: 100%; /* Full width */
+  max-width: 900px; /* Max width for better readability */
+  margin-left: auto; /* Center horizontally */
+  margin-right: auto; /* Center horizontally */
+  background-color: #ffffff; /* White background */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.nids-container h1 {
+  font-size: 28px;
+  margin-bottom: 20px; /* Space below title */
+  color: #333; /* Dark color for text */
+}
+
+.nids-form {
+  width: 100%; /* Full width for the form */
+}
+
+.nids-textarea {
+  width: 100%; /* Full width for the textarea */
+  padding: 15px; /* Add padding */
+  border: 1px solid #ced4da; /* Light border */
+  border-radius: 8px; /* Rounded corners */
+  resize: vertical; /* Allow vertical resizing */
+  font-size: 16px; /* Text size */
+  margin-bottom: 15px; /* Space below textarea */
+  transition: border 0.3s; /* Transition for border on focus */
+}
+
+.nids-textarea:focus {
+  border-color: #007bff; /* Highlight border on focus */
+  outline: none; /* Remove outline */
+}
+
+.button-container {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+  margin-top: 10px; /* Space above the buttons */
+}
+
+.nids-button {
+  padding: 10px 15px; /* Button padding */
+  font-size: 16px; /* Button font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  border: none; /* Remove default border */
+  background-color: #007bff; /* Button background color */
+  color: white; /* Button text color */
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s; /* Smooth transition for hover */
+}
+
+.nids-button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+.error-message {
+  color: red; /* Red for error messages */
+  margin-top: 15px; /* Space above error message */
+}
+
+.predictions-container {
+  margin-top: 20px; /* Space above predictions */
+  padding: 15px; /* Add padding */
+  background-color: #f8f9fa; /* Light background for contrast */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Light shadow */
+  width: 100%; /* Full width */
+}
+
+.predictions-container h2 {
+  margin: 0 0 10px; /* No margin on top, some below */
+  font-size: 20px; /* Slightly larger heading */
+  color: #333; /* Darker color for text */
+}
+
+.predictions-container ul {
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+  list-style-type: none; /* No bullets */
+}
+
+.predictions-container li {
+  color: #007bff; /* Use the primary color for predictions */
+  font-weight: bold; /* Make predictions bold */
+}
