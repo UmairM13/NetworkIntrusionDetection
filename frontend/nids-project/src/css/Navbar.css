@@ -1,0 +1,42 @@
+/* src/css/Navbar.css */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #007bff; /* Navbar background */
+  color: white; /* Navbar text color */
+  position: fixed; /* Fixed position at the top */
+  top: 0; /* Stick to the top */
+  left: 0; /* Align to the left */
+  right: 0; /* Align to the right */
+  z-index: 1000; /* Make sure it stays above other content */
+}
+
+.navbar h1 {
+  margin: 0;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 15px; /* Space between navbar items */
+}
+
+.navbar a {
+  color: white; /* Link color */
+  text-decoration: none; /* Remove underline */
+}
+
+.navbar button {
+  background-color: transparent; /* Transparent background for buttons */
+  border: none; /* Remove border */
+  color: white; /* Button text color */
+  cursor: pointer; /* Pointer cursor */
+}
+
+/* Add some padding to the body to prevent content from being hidden under the navbar */
+body {
+  padding-top: 60px; /* Adjust based on navbar height */
+}
