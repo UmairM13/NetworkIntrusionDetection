@@ -17,7 +17,9 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, onLogout }) => {
 
   return (
     <nav className="navbar">
-      <h1>NIDS App</h1>
+      <Link to="/">
+        <h1>NIDS App</h1>
+      </Link>
       <ul>
         <li>
           <Link to="/">Home</Link>
