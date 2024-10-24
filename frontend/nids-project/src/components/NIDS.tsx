@@ -89,7 +89,7 @@ const NIDS: React.FC<NIDSProps> = () => {
             onClick={handleGenerateSampleData}
             className="nids-button"
           >
-            Generate Random Sample Data
+            Simulate Random Sample Data
           </button>
           <input
             type="file"
