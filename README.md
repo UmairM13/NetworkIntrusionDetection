@@ -1,6 +1,6 @@
 # Network Intrusion Detection System (NIDS)
 
-This project is a **Network Intrusion Detection System (NIDS)** built with a machine learning model to analyze network traffic data and predict whether the behavior represents normal activity or a potential network intrusion.
+This project is a **Network Intrusion Detection System (NIDS)** built with a machine learning model to analyze network traffic data and predict whether the behavior represents normal activity or a potential network intrusion. The system uses the **UNSW_NB15** dataset.
 
 ## Table of Contents
 
