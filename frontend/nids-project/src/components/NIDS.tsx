@@ -11,7 +11,6 @@ const NIDS: React.FC<NIDSProps> = () => {
   const [predictions, setPredictions] = useState<string[]>([]); // Predictions returned from the API
   const [error, setError] = useState<string>(""); // Error message handling
 
-  // Define the CSV headers and sample data rows
   const headers = `dur,proto,service,state,spkts,dpkts,sbytes,dbytes,rate,sttl,dttl,sload,dload,sloss,dloss,sinpkt,dinpkt,sjit,djit,swin,stcpb,dtcpb,dwin,tcprtt,synack,ackdat,smean,dmean,trans_depth,response_body_len,ct_srv_src,ct_state_ttl,ct_dst_ltm,ct_src_dport_ltm,ct_dst_sport_ltm,ct_dst_src_ltm,is_ftp_login,ct_ftp_cmd,ct_flw_http_mthd,ct_src_ltm,ct_srv_dst,is_sm_ips_ports`;
 
   const sampleDataArray = [
@@ -24,14 +23,18 @@ const NIDS: React.FC<NIDSProps> = () => {
     `4.0,TCP,UDP,RECV,3,3,7000,14000,0.4,50,50,0,0,0,0,0,0,0.0,0.0,0,0,0,0,0,0,0,0,0.0,0.0,1,1,1,1,1,0,0,0,0,0,0`,
   ];
 
-  // Function to generate random sample data by combining the headers with random data row
+  // Generate random sample data
   const handleGenerateSampleData = () => {
     const randomSample =
       sampleDataArray[Math.floor(Math.random() * sampleDataArray.length)];
-    setData(`${headers}\n${randomSample}`); // Add headers to the selected random sample
+    setData(`${headers}\n${randomSample}`);
   };
 
-  // Function to handle file uploads for custom CSV input
+  // Clear the data in the input field
+  const handleClearData = () => {
+    setData("");
+  };
+
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -46,22 +49,17 @@ const NIDS: React.FC<NIDSProps> = () => {
     }
   };
 
-  // Function to submit the data and make predictions via the API
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(""); // Clear previous errors
-    setPredictions([]); // Clear previous predictions
+    setError("");
+    setPredictions([]);
 
     try {
-      const result = await predict(data); // Call the predict function without token
-      console.log("API Response:", result); // Debugging line
-
+      const result = await predict(data);
       if (result && Array.isArray(result.predictions)) {
         setPredictions(result.predictions);
-        console.log("Updated Predictions:", result.predictions); // Debugging line
       } else {
         setError("Unexpected response structure from API.");
-        console.error("Unexpected response:", result); // Log unexpected responses
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -90,6 +88,13 @@ const NIDS: React.FC<NIDSProps> = () => {
             className="nids-button"
           >
             Simulate Random Sample Data
+          </button>
+          <button
+            type="button"
+            onClick={handleClearData}
+            className="nids-button"
+          >
+            Clear
           </button>
           <input
             type="file"
